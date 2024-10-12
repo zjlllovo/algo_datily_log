@@ -1,1 +1,1 @@
-myproject
+# algo_datily_log

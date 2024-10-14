@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <stack>
 #include <vector>
@@ -16,25 +17,23 @@ public:
       : _val(x), _left(left), _right(right) {}
 };
 
-vector<int> PreorderTraversal(TreeNode *root) {
+vector<int> PostorderTraversal(TreeNode *root) {
   stack<TreeNode *> stk;
   vector<int> result;
-  TreeNode *node = root;
-  if (node) {
-    stk.push(node);
-  }
+  stk.push(root);
   while (!stk.empty()) {
-    node = stk.top();
+    TreeNode *node = stk.top();
     stk.pop();
     result.push_back(node->_val);
 
-    if (node->_right) {
-      stk.push(node->_right);
-    }
     if (node->_left) {
       stk.push(node->_left);
     }
+    if (node->_right) {
+      stk.push(node->_right);
+    }
   }
+  reverse(result.begin(), result.end());
   return result;
 }
 
@@ -44,7 +43,7 @@ int main() {
   TreeNode *node2 = new TreeNode(2, node4, node5);
   TreeNode *node3 = new TreeNode(3);
   TreeNode *root = new TreeNode(1, node2, node3);
-  vector<int> vec = PreorderTraversal(root);
+  vector<int> vec = PostorderTraversal(root);
   for (auto &it : vec) {
     std::cout << it << std::endl;
   }

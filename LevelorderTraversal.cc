@@ -6,41 +6,47 @@ using std::vector;
 
 class TreeNode {
 public:
-  TreeNode() : val(0), _LeftNode(nullptr), _RighNode(nullptr) {}
-  TreeNode(int x) : val(x), _LeftNode(nullptr), _RighNode(nullptr) {}
-  TreeNode(int x, TreeNode *LeftNode, TreeNode *RighNode)
-      : val(x), _LeftNode(LeftNode), _RighNode(RighNode) {}
-  int val;
-  TreeNode *_LeftNode;
-  TreeNode *_RighNode;
+  int _val;
+  TreeNode *_left;
+  TreeNode *_right;
+  TreeNode() : _val(0), _left(nullptr), _right(nullptr) {}
+  TreeNode(int x) : _val(x), _left(nullptr), _right(nullptr) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : _val(0), _left(left), _right(right) {}
 };
 
-class Solution {
-public:
-  vector<vector<int>> levelOrder(TreeNode *root) {
-    queue<TreeNode *> que;
-    if (root) {
-      que.push(root);
-    }
-    vector<vector<int>> result;
-    while (!que.empty()) {
-      int size = que.size();
-      vector<int> vec;
-      while (size--) {
-        TreeNode *front = que.front();
-        que.pop();
-        vec.push_back(front->val);
-        if (front->_LeftNode) {
-          que.push(front->_LeftNode);
-        }
-        if (front->_RighNode) {
-          que.push(front->_RighNode);
-        }
+vector<vector<int>> LevelorderTraversal(TreeNode *root) {
+  queue<TreeNode *> que;
+  vector<vector<int>> result;
+  que.push(root);
+  while (root) {
+    vector<int> vec;
+    int sz = que.size();
+    while (sz--) {
+      TreeNode *node = que.front();
+      que.pop();
+      vec.push_back(node->_val);
+      if (node->_left) {
+        que.push(node->_left);
       }
-      result.push_back(vec);
-    }
-    return result;
-  }
-};
 
-int main() { return 0; }
+      if (node->_right) {
+        que.push(node->_right);
+      }
+    }
+    result.push_back(vec);
+  }
+  return result;
+}
+
+int main() {
+  TreeNode node5(5, nullptr, nullptr);
+  TreeNode node3(3, nullptr, nullptr);
+  TreeNode node4(4, nullptr, nullptr);
+  TreeNode node2(2, &node4, &node5);
+  TreeNode root(1, &node2, &node3);
+
+  LevelorderTraversal(&root);
+
+  return 0;
+}

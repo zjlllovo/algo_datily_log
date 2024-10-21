@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <iostream>
 
 using std::cout;
@@ -13,9 +14,17 @@ int My_Strlen(const char *var) {
   return cnt;
 }
 
+int _My_Strlen_1(const char *var) {
+  assert(var);
+  if (!*var)
+    return 0;
+  else {
+    return 1 + _My_Strlen_1(++var);
+  }
+}
 int main() {
   char buf[] = "hello world";
-  int cnt = My_Strlen(buf);
+  int cnt = _My_Strlen_1(buf);
   cout << cnt << endl;
   return 0;
 }

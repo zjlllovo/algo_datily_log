@@ -6,6 +6,13 @@ using std::cout;
 using std::endl;
 using std::vector;
 
+template <typename T> void print(vector<T> &vec) {
+  for (auto it : vec) {
+    cout << it << " ";
+  }
+  cout << endl;
+}
+
 int partition(vector<int> &vec, int low, int high) {
   int pivot = vec[high];
   int i = low - 1;
@@ -27,15 +34,8 @@ void quickSort(vector<int> &vec, int low, int high) {
   }
 }
 
-template <typename T> void print(vector<T> vec) {
-  for (auto it : vec) {
-    cout << it << " ";
-  }
-  cout << endl;
-}
-
 int main() {
-  vector<int> vec = {64, 34, 25, 12, 22, 11, 90};
+  vector<int> vec = {64, 34, 90, 12, 22, 11, 25};
   quickSort(vec, 0, vec.size() - 1);
   print(vec);
   return 0;
